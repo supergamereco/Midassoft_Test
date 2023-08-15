@@ -28,11 +28,11 @@ export function findDuplicateRank(_cards:string[]):number{
     let duplicated: boolean = true;
     let m_bonusScore:number = 0;
     for(let i = 0; i < _cards.length; i++){
-        if(i != 0 && _cards[i - 1].charAt(0) != _cards[i].charAt(0) || !duplicated)
+        if(i != 0 && _cards[i - 1].charAt(1) != _cards[i].charAt(1) || !duplicated)
                 duplicated = false;
     }
     if(duplicated){
-        if(_cards[0].charAt(0) == 'A')
+        if(_cards[0].charAt(1) == 'A')
             m_bonusScore = 35;
         else
             m_bonusScore = 32.5;
