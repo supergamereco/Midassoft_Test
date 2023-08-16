@@ -1,25 +1,23 @@
-let words: string[] = new Array;
-let answers: string[] = new Array;
 
+//main
 export function getQuestionPart(_phrases:string[]):string[] {
-    getAnswer(_phrases);
+    let words: string[] = new Array;
+    let answers: string[] = getAnswer(_phrases);
     if(checkAnswer(answers))
-        removerAnserFromWords(answers[0], _phrases);
+        words = removerAnserFromWords(answers[0], _phrases);
     else    
         console.log("error: all words need to shared the same answer.")
     return words;
 }
 
 //Solution for answer
-function getAnswer(_phrases:string[]){
+export function getAnswer(_phrases:string[]):string[]{
+    let answers:string[] = new Array;
     for(let i = 1; i < _phrases.length; i++){
-        let matchWordLefttoRight: string = "";
-        let matchWordRighttoLeft: string = "";
-        matchWordLefttoRight = _phrases[i-1];
-        matchWordRighttoLeft = reverseText(_phrases[i-1]);
-        let wordRighttoLeft: string;
+        let matchWordLefttoRight = _phrases[i-1];
+        let matchWordRighttoLeft = reverseText(_phrases[i-1]);
+        let wordRighttoLeft = reverseText(_phrases[i]);
         matchWordLefttoRight = findSimilarWord(_phrases[i], matchWordLefttoRight);
-        wordRighttoLeft = reverseText(_phrases[i]);
         matchWordRighttoLeft = findSimilarWord(wordRighttoLeft, matchWordRighttoLeft);
         if(matchWordRighttoLeft.length > matchWordLefttoRight.length){
             matchWordRighttoLeft = reverseText(matchWordRighttoLeft);
@@ -29,14 +27,17 @@ function getAnswer(_phrases:string[]){
             answers.push(matchWordLefttoRight);
         }
     }
+    return answers;
 }
 
 //Remove answer from all words
-function removerAnserFromWords(_answer:string, _words:string[]){
+export function removerAnserFromWords(_answer:string, _words:string[]):string[]{
+    let words: string[] = new Array;
     for(let i = 0; i < _words.length; i++){
-        _words[i] = _words[i].replace(_answer, "");
+        _words[i] = _words[i].replace(_answer, "").replace(" ", "");;
         words.push(_words[i]);
     }
+    return words;
 }
 
 //Check if all words has the same answer
@@ -64,11 +65,9 @@ export function reverseText(_text:string):string{
 export function findSimilarWord(_text:string, matchWord:string):string{
     let wordLefttoRightTemp: string = "";
     for(let j = 0; j < _text.length; j++){
-        let temp: string;
-        temp = wordLefttoRightTemp;
-        wordLefttoRightTemp += _text.charAt(j);
+        let temp = wordLefttoRightTemp;
+        wordLefttoRightTemp += _text.replace(" ", "").charAt(j);
         if(!matchWord.includes(wordLefttoRightTemp)){
-            wordLefttoRightTemp.replace(wordLefttoRightTemp, temp);
             wordLefttoRightTemp = temp;
             break;
         }
@@ -76,8 +75,11 @@ export function findSimilarWord(_text:string, matchWord:string):string{
     return wordLefttoRightTemp;
 }
 
-getQuestionPart(["BATHROOM", "BATH SALTS", "BLOODBATH"]);
-//getQuestionPart(["BEFRIEND", "GIRLFRIEND", "FRIENDSHIP"]);
-//getQuestionPart(["DESERT EAGLE", "BLACK DESERT", "RED DESERT"]);
+//Test
+let input1: string[] = ["BATHROOM", "BATH SALTS", "BLOODBATH"];
+let input2: string[] = ["BEFRIEND", "GIRLFRIEND", "FRIENDSHIP"];
+let input3: string[] = ["DESERT EAGLE", "BLACK DESERT", "RED DESERT"];
 
-console.log(words);
+console.log(getQuestionPart(input1));
+console.log(getQuestionPart(input2));
+console.log(getQuestionPart(input3));
