@@ -13,10 +13,13 @@ export function getQuestionPart(_phrases:string[]):string[] {
 //Solution for answer
 export function getAnswer(_phrases:string[]):string[]{
     let answers:string[] = new Array;
+    let matchWordLefttoRight:string = "";
+    let matchWordRighttoLeft:string = "";
+    let wordRighttoLeft:string = "";
     for(let i = 1; i < _phrases.length; i++){
-        let matchWordLefttoRight = _phrases[i-1];
-        let matchWordRighttoLeft = reverseText(_phrases[i-1]);
-        let wordRighttoLeft = reverseText(_phrases[i]);
+        matchWordLefttoRight = _phrases[i-1];
+        matchWordRighttoLeft = reverseText(_phrases[i-1]);
+        wordRighttoLeft = reverseText(_phrases[i]);
         matchWordLefttoRight = findSimilarWord(_phrases[i], matchWordLefttoRight);
         matchWordRighttoLeft = findSimilarWord(wordRighttoLeft, matchWordRighttoLeft);
         if(matchWordRighttoLeft.length > matchWordLefttoRight.length){
@@ -64,8 +67,9 @@ export function reverseText(_text:string):string{
 //Find similar word in strings
 export function findSimilarWord(_text:string, matchWord:string):string{
     let wordLefttoRightTemp: string = "";
+    let temp: string = "";
     for(let j = 0; j < _text.length; j++){
-        let temp = wordLefttoRightTemp;
+        temp = wordLefttoRightTemp;
         wordLefttoRightTemp += _text.replace(" ", "").charAt(j);
         if(!matchWord.includes(wordLefttoRightTemp)){
             wordLefttoRightTemp = temp;

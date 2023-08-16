@@ -7,9 +7,10 @@ export function getHandScore(_input:string):number{
     let FaceScore:number = 10;
     //#region Collect score and rank on cards
     let cards = _input.split(" ");
+    let card: any;
     for(let i = 0; i < cards.length; i++){
         suit.push(cards[i].charAt(0));
-        let card: any = cards[i].slice(1);
+        card = cards[i].slice(1);
         if(card == 'A')
             card = AceScore;
         else if(card == 'J' || card == 'Q' || card == 'K')

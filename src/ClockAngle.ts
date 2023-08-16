@@ -29,6 +29,7 @@ export function calculateAngleDiff(_hhAngle:number, _mmAngle:number):number{
     let angle360:number = 360;
     if(_hhAngle >= angle360)
         _hhAngle = _hhAngle - angle360;
+    
     if(_mmAngle == angle0 && _hhAngle > angle180)
         _mmAngle = angle360;
 
